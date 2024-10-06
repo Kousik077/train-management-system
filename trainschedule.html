@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #010000;
+            padding: 20px;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('pngtree-steam-engine-hd-wallpapers-4k-picture-image_2645358.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            opacity: 0.27; 
+            z-index: -1; 
+        }
+        h1 {
+            color: #ebebeb; 
+        }
+        ul {
+            list-style-type: none; 
+            padding: 0; 
+            margin-top: 20px; 
+        }
+        li {
+            background: #d6d3d3; 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin: 5px 0; 
+            border-radius: 5px; 
+            color: rgb(2, 2, 2);
+            display: flex; 
+            justify-content: space-between; 
+        }
+        button {
+            background-color: #1c1a1a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: large;
+        }
+        button:hover {
+            background-color: #c0392b; 
+        }
+        
+    </style>
+</head>
+<body><center>
+    <h1>Train Management system</h1>
+    <label for="trainid" style="color: #efdbd9; margin:20px;padding-left: 73px;font-size: 20px;" >Train ID:</label>
+    <input type="text" id="trainid" placeholder="enter train id  " ><br><br>
+    <label for="arrival" style="color: #efdbd9;  margin: 22px;font-size: 20px;">Arrival:</label>
+    <input type="time" id="arrival" ><br><br>
+    <label for="depature" style="color: #efdbd9; margin:-7px;padding-right:27px ;font-size: 20px;">Departure:</label>
+    <input type="time" id="depature"><br><br>
+    <button onclick="addTrain()" style="padding: 15px;margin-top: 30px;marg ">Add Train</button>
+</center>
+    <ul id="inventoryList">
+        
+    </ul>
+
+    <script>
+        const inven = [];
+
+        function addTrain() {
+            const trainid = document.getElementById('trainid').value;
+            const arrival = document.getElementById('arrival').value;
+            const depature = document.getElementById('depature').value;
+
+           
+            if (trainid === '') {
+                alert('Please enter a Train ID.');
+                return;
+            }
+
+           
+            inven.push({ trainid, arrival, depature });
+            updateInven();
+            clearInputs();
+        }
+
+        function updateInven() {
+            const inventoryList = document.getElementById('inventoryList');
+            inventoryList.innerHTML = ''; 
+
+            inven.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Train ID: ${item.trainid}, Arrival: ${item.arrival}, Departure: ${item.depature}`;
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = function() {
+                    inven.splice(index, 1); 
+                    updateInven(); 
+                };
+
+                listItem.appendChild(removeButton); 
+                inventoryList.appendChild(listItem); 
+            });
+        }
+
+        function clearInputs() {
+            document.getElementById('trainid').value = '';
+            document.getElementById('arrival').value = '';
+            document.getElementById('depature').value = '';
+        }
+    </script>
+</body>
+</html>
